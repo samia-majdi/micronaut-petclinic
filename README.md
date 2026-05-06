@@ -91,7 +91,7 @@ The `docker-compose.yml` file handles everything automatically:
 - Starts the application
 - Connects them together
 
-> **Note:** The repository supports both Maven and Gradle for local development, but the `Dockerfile` build currently uses the Maven build path.
+> **Note:** The repository supports both Maven and Gradle for local development. The `Dockerfile` uses Maven by default, but includes commented Gradle build steps you can enable if you prefer building the image with Gradle.
 
 To stop:
 ```bash
