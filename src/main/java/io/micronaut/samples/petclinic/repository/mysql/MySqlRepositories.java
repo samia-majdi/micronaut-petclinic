@@ -22,11 +22,11 @@ public final class MySqlRepositories {
     @JdbcRepository(dialect = Dialect.MYSQL)
     public interface MySqlPetRepository extends PetRepository {
         @Override
-        @Query(value = "SELECT p.* FROM pets p WHERE p.owner_id = :ownerId ORDER BY p.name", nativeQuery = true)
+        @Query(value = "SELECT p.* FROM PETS p WHERE p.OWNER_ID = :ownerId ORDER BY p.NAME", nativeQuery = true)
         Collection<Pet> findByOwnerId(Integer ownerId);
 
         @Override
-        @Query(value = "SELECT p.* FROM pets p WHERE p.owner_id IN (:ownerIds) ORDER BY p.owner_id, p.name", nativeQuery = true)
+        @Query(value = "SELECT p.* FROM PETS p WHERE p.OWNER_ID IN (:ownerIds) ORDER BY p.OWNER_ID, p.NAME", nativeQuery = true)
         List<Pet> findByOwnerIdIn(List<Integer> ownerIds);
     }
 
@@ -44,7 +44,7 @@ public final class MySqlRepositories {
     @JdbcRepository(dialect = Dialect.MYSQL)
     public interface MySqlVetRepository extends VetRepository {
         @Override
-        @Query(value = "SELECT v.* FROM vets v ORDER BY v.last_name", nativeQuery = true)
+        @Query(value = "SELECT v.* FROM VETS v ORDER BY v.LAST_NAME", nativeQuery = true)
         Collection<Vet> findAllWithSpecialties();
     }
 
@@ -52,7 +52,7 @@ public final class MySqlRepositories {
     @JdbcRepository(dialect = Dialect.MYSQL)
     public interface MySqlVisitRepository extends VisitRepository {
         @Override
-        @Query(value = "SELECT v.* FROM visits v WHERE v.pet_id = :petId ORDER BY v.visit_date DESC", nativeQuery = true)
+        @Query(value = "SELECT v.* FROM VISITS v WHERE v.PET_ID = :petId ORDER BY v.VISIT_DATE DESC", nativeQuery = true)
         Collection<Visit> findByPetId(Integer petId);
     }
 
@@ -60,7 +60,7 @@ public final class MySqlRepositories {
     @JdbcRepository(dialect = Dialect.MYSQL)
     public interface MySqlVetSpecialtyRepository extends VetSpecialtyRepository {
         @Override
-        @Query(value = "SELECT s.* FROM specialties s JOIN vet_specialties vs ON vs.specialty_id = s.id WHERE vs.vet_id = :vetId ORDER BY s.name", nativeQuery = true)
+        @Query(value = "SELECT s.* FROM SPECIALTIES s JOIN VET_SPECIALTIES vs ON vs.SPECIALTY_ID = s.id WHERE vs.VET_ID = :vetId ORDER BY s.NAME", nativeQuery = true)
         List<Specialty> findSpecialtiesByVetId(Integer vetId);
     }
 }
