@@ -7,8 +7,10 @@
 @param Owner owner
 @param Collection<PetType> types
 @param boolean isNew
+@param java.util.Map<String, String> validationErrors
 @param io.micronaut.samples.petclinic.system.I18nViewModelProcessor.Msg msg
 @param io.micronaut.http.HttpRequest<?> request
+@param java.util.Locale locale
 
 @template.layout(content = @`
     <div class="page-header">
@@ -40,30 +42,44 @@
                         <h4>${isNew ? msg.text("pet.registerNew") : msg.text("pet.updateInfo")}</h4>
                     </div>
 
+                    @if(validationErrors != null && !validationErrors.isEmpty())
+                        <div class="alert alert-danger" role="alert">
+                            ${msg.text("validation.fixErrors")}
+                        </div>
+                    @endif
+ 
                     <form action="${isNew ? ("/owners/" + owner.getId() + "/pets/new") : ("/owners/" + owner.getId() + "/pets/" + pet.getId() + "/edit")}" method="post" class="needs-validation" novalidate>
                         <div class="mb-4">
                             <label for="name" class="form-label">
                                 <i class="fas fa-tag me-2 text-primary"></i>${msg.text("pet.name")}
                             </label>
-                            <input type="text" class="form-control" id="name" name="name"
+                            <input type="text" class="form-control ${validationErrors != null && validationErrors.containsKey("name") ? "is-invalid" : ""}" id="name" name="name"
                                    value="${pet != null && pet.getName() != null ? pet.getName() : ""}" required>
-                            <div class="invalid-feedback">${msg.text("validation.petName.required")}</div>
+                            @if(validationErrors != null && validationErrors.containsKey("name"))
+                                <div class="invalid-feedback">${validationErrors.get("name")}</div>
+                            @else
+                                <div class="invalid-feedback">${msg.text("validation.petName.required")}</div>
+                            @endif
                         </div>
-
+ 
                         <div class="mb-4">
                             <label for="birthDate" class="form-label">
                                 <i class="fas fa-birthday-cake me-2 text-primary"></i>${msg.text("pet.birthDate")}
                             </label>
-                            <input type="date" class="form-control" id="birthDate" name="birthDate"
+                            <input type="date" class="form-control ${validationErrors != null && validationErrors.containsKey("birthDate") ? "is-invalid" : ""}" id="birthDate" name="birthDate"
                                    value="${pet != null && pet.getBirthDate() != null ? pet.getBirthDate().toString() : ""}" required>
-                            <div class="invalid-feedback">${msg.text("validation.birthDate.required")}</div>
+                            @if(validationErrors != null && validationErrors.containsKey("birthDate"))
+                                <div class="invalid-feedback">${validationErrors.get("birthDate")}</div>
+                            @else
+                                <div class="invalid-feedback">${msg.text("validation.birthDate.required")}</div>
+                            @endif
                         </div>
-
+ 
                         <div class="mb-4">
                             <label for="typeId" class="form-label">
                                 <i class="fas fa-paw me-2 text-primary"></i>${msg.text("pet.type")}
                             </label>
-                            <select class="form-select" id="typeId" name="typeId" required>
+                            <select class="form-select ${validationErrors != null && validationErrors.containsKey("typeId") ? "is-invalid" : ""}" id="typeId" name="typeId" required>
                                 <option value="">${msg.text("pet.selectType")}</option>
                                 @for(PetType type : types)
                                     @if(pet != null && pet.getTypeId() != null && pet.getTypeId().equals(type.getId()))
@@ -73,7 +89,11 @@
                                     @endif
                                 @endfor
                             </select>
-                            <div class="invalid-feedback">${msg.text("validation.petType.required")}</div>
+                            @if(validationErrors != null && validationErrors.containsKey("typeId"))
+                                <div class="invalid-feedback">${validationErrors.get("typeId")}</div>
+                            @else
+                                <div class="invalid-feedback">${msg.text("validation.petType.required")}</div>
+                            @endif
                         </div>
 
                         <hr class="my-4">
@@ -92,4 +112,4 @@
             </div>
         </div>
     </main>
-`, msg = msg, request = request)
+`, msg = msg, request = request, locale = locale)

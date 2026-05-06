@@ -4,8 +4,6 @@ micronaut:
   server:
     port: -1
   views:
-    thymeleaf:
-      enabled: false
     jte:
       dynamic: true
 

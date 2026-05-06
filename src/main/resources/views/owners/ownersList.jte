@@ -6,6 +6,7 @@
 @param String lastName
 @param io.micronaut.samples.petclinic.system.I18nViewModelProcessor.Msg msg
 @param io.micronaut.http.HttpRequest<?> request
+@param java.util.Locale locale
 
 @template.layout(content = @`
     <div class="page-header">
@@ -95,4 +96,4 @@
             </div>
         @endif
     </main>
-`, msg = msg, request = request)
+`, msg = msg, request = request, locale = locale)

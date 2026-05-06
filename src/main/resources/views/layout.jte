@@ -1,9 +1,10 @@
 @param gg.jte.Content content
 @param io.micronaut.samples.petclinic.system.I18nViewModelProcessor.Msg msg
 @param io.micronaut.http.HttpRequest<?> request
+@param java.util.Locale locale
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${locale != null ? locale.toString() : "en"}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +15,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="/resources/css/petclinic.css" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="/">
             <i class="fas fa-paw"></i>
-            PetClinic
+            <span>${msg.text("app.title")}</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -46,7 +47,19 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-globe"></i> ${msg.text("nav.language")}
+                        <i class="fas fa-globe"></i>
+                        @if(locale != null && locale.toString().startsWith("en"))
+                            ${msg.text("lang.en")}
+                        @endif
+                        @if(locale != null && locale.toString().startsWith("es"))
+                            ${msg.text("lang.es")}
+                        @endif
+                        @if(locale != null && locale.toString().startsWith("de"))
+                            ${msg.text("lang.de")}
+                        @endif
+                        @if(locale == null)
+                            ${msg.text("lang.en")}
+                        @endif
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                         <li><a class="dropdown-item" href="/locale?lang=en&backUrl=${request.getPath()}">${msg.text("lang.en")}</a></li>
@@ -59,7 +72,7 @@
     </div>
 </nav>
 
-<main class="py-4">
+<main class="flex-grow-1 py-4">
     ${content}
 </main>
 
@@ -98,6 +111,6 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -6,8 +6,10 @@
 @param VisitForm visit
 @param Pet pet
 @param Owner owner
+@param java.util.Map<String, String> validationErrors
 @param io.micronaut.samples.petclinic.system.I18nViewModelProcessor.Msg msg
 @param io.micronaut.http.HttpRequest<?> request
+@param java.util.Locale locale
 
 @template.layout(content = @`
     <div class="page-header">
@@ -87,22 +89,36 @@
                         <p class="text-muted">${msg.text("visit.recordFor")} ${pet.getName()}</p>
                     </div>
 
+                    @if(validationErrors != null && !validationErrors.isEmpty())
+                        <div class="alert alert-danger" role="alert">
+                            ${msg.text("validation.fixErrors")}
+                        </div>
+                    @endif
+ 
                     <form action="/owners/${owner.getId()}/pets/${pet.getId()}/visits/new" method="post" class="needs-validation" novalidate>
                         <div class="mb-4">
                             <label for="date" class="form-label">
                                 <i class="fas fa-calendar me-2 text-primary"></i>${msg.text("visit.visitDate")}
                             </label>
-                            <input type="date" class="form-control" id="date" name="date"
+                            <input type="date" class="form-control ${validationErrors != null && validationErrors.containsKey("date") ? "is-invalid" : ""}" id="date" name="date"
                                    value="${visit != null && visit.getDate() != null ? visit.getDate().toString() : ""}" required>
-                            <div class="invalid-feedback">${msg.text("validation.visitDate.required")}</div>
+                            @if(validationErrors != null && validationErrors.containsKey("date"))
+                                <div class="invalid-feedback">${validationErrors.get("date")}</div>
+                            @else
+                                <div class="invalid-feedback">${msg.text("validation.visitDate.required")}</div>
+                            @endif
                         </div>
-
+ 
                         <div class="mb-4">
                             <label for="description" class="form-label">
                                 <i class="fas fa-notes-medical me-2 text-primary"></i>${msg.text("visit.description")}
                             </label>
-                            <textarea class="form-control" id="description" name="description" rows="4" required>${visit != null && visit.getDescription() != null ? visit.getDescription() : ""}</textarea>
-                            <div class="invalid-feedback">${msg.text("validation.description.required")}</div>
+                            <textarea class="form-control ${validationErrors != null && validationErrors.containsKey("description") ? "is-invalid" : ""}" id="description" name="description" rows="4" required>${visit != null && visit.getDescription() != null ? visit.getDescription() : ""}</textarea>
+                            @if(validationErrors != null && validationErrors.containsKey("description"))
+                                <div class="invalid-feedback">${validationErrors.get("description")}</div>
+                            @else
+                                <div class="invalid-feedback">${msg.text("validation.description.required")}</div>
+                            @endif
                         </div>
 
                         <hr class="my-4">
@@ -120,4 +136,4 @@
             </div>
         </div>
     </main>
-`, msg = msg, request = request)
+`, msg = msg, request = request, locale = locale)
