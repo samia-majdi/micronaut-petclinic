@@ -24,7 +24,7 @@ This Micronaut PetClinic app allows you to:
 ## Requirements
 
 - Java 21 or higher
-- Maven 3.8+ (or use the included wrapper)
+- Maven 3.9+ (or use the included wrapper)
 - Gradle 9+ (or use the included wrapper)
 - Docker (optional, for databases)
 

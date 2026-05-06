@@ -13,14 +13,13 @@ COPY src src
 RUN ./mvnw package -DskipTests
 
 # Gradle build (alternative)
-# Keeping this here makes it easy to switch the Docker build to Gradle if desired.
 # To use it, comment out the Maven block above and uncomment these lines.
 #
-# COPY gradlew settings.gradle.kts build.gradle.kts ./
+# COPY gradlew gradlew.bat build.gradle.kts settings.gradle.kts gradle.properties ./
 # COPY gradle gradle
-# RUN chmod +x gradlew && ./gradlew --no-daemon dependencies
+# RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
 # COPY src src
-# RUN ./gradlew --no-daemon build
+# RUN ./gradlew build -x test --no-daemon
 
 # Run stage (JVM)
 FROM eclipse-temurin:21-jre-alpine AS jvm
