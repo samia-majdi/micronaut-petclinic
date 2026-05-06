@@ -2,6 +2,7 @@
 @import io.micronaut.samples.petclinic.model.Owner
 @import io.micronaut.samples.petclinic.model.Pet
 @import io.micronaut.samples.petclinic.model.Visit
+@import java.util.Locale
 
 @param VisitForm visit
 @param Pet pet
@@ -39,9 +40,22 @@
                         </div>
                         <div class="detail-body">
                             <div class="text-center mb-4">
-                        <div class="pet-icon mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
-                            <i class="fas fa-paw"></i>
-                        </div>
+                                @{
+                                    String typeName = pet.getType() != null ? pet.getType().getName() : null;
+                                    String typeKey = typeName != null ? typeName.trim().toLowerCase(Locale.ROOT) : "";
+                                    String iconClass = switch (typeKey) {
+                                        case "cat" -> "cat";
+                                        case "dog" -> "dog";
+                                        case "bird" -> "bird";
+                                        case "hamster" -> "hamster";
+                                        case "snake" -> "snake";
+                                        case "lizard" -> "lizard";
+                                        default -> "dog";
+                                    };
+                                }
+                                <div class="pet-icon mx-auto mb-3 ${iconClass}" style="width: 80px; height: 80px; font-size: 2rem;">
+                                    <i class="fas fa-paw"></i>
+                                </div>
                                 <h5>${pet.getName()}</h5>
                             </div>
                             <div class="info-row">

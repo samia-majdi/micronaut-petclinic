@@ -1,6 +1,7 @@
 @import io.micronaut.samples.petclinic.model.Owner
 @import io.micronaut.samples.petclinic.model.Pet
 @import io.micronaut.samples.petclinic.model.Visit
+@import java.util.Locale
 
 @param Owner owner
 @param io.micronaut.samples.petclinic.system.I18nViewModelProcessor.Msg msg
@@ -91,7 +92,17 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-4">
                                             <div class="d-flex align-items-center">
-                                                <div class="pet-icon me-3 dog">
+                                                <div class="pet-icon me-3 ${
+                                                    switch ((pet.getType() != null && pet.getType().getName() != null) ? pet.getType().getName().trim().toLowerCase(Locale.ROOT) : "") {
+                                                        case "cat" -> "cat";
+                                                        case "dog" -> "dog";
+                                                        case "bird" -> "bird";
+                                                        case "hamster" -> "hamster";
+                                                        case "snake" -> "snake";
+                                                        case "lizard" -> "lizard";
+                                                        default -> "dog";
+                                                    }
+                                                }">
                                                     <i class="fas fa-paw"></i>
                                                 </div>
                                                 <div>
