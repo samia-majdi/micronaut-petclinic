@@ -41,20 +41,19 @@
                         <div class="detail-body">
                             <div class="text-center mb-4">
                                 @{
-                                    String typeName = pet.getType() != null ? pet.getType().getName() : null;
-                                    String typeKey = typeName != null ? typeName.trim().toLowerCase(Locale.ROOT) : "";
+                                    String typeKey = (pet.getType() != null && pet.getType().getName() != null)
+                                        ? pet.getType().getName().trim().toLowerCase(Locale.ROOT)
+                                        : "";
                                     String iconClass = switch (typeKey) {
-                                        case "cat" -> "cat";
-                                        case "dog" -> "dog";
-                                        case "bird" -> "bird";
-                                        case "hamster" -> "hamster";
-                                        case "snake" -> "snake";
-                                        case "lizard" -> "lizard";
-                                        default -> "dog";
+                                        case "cat" -> "fa-cat";
+                                        case "bird" -> "fa-dove";
+                                        case "hamster" -> "fa-hippo";
+                                        case "snake" -> "fa-worm";
+                                        default -> "fa-dog";
                                     };
                                 }
-                                <div class="pet-icon mx-auto mb-3 ${iconClass}" style="width: 80px; height: 80px; font-size: 2rem;">
-                                    <i class="fas fa-paw"></i>
+                                <div class="pet-icon mx-auto mb-3 ${typeKey.isBlank() ? "dog" : typeKey}" style="width: 80px; height: 80px; font-size: 2rem;">
+                                    <i class="fas ${iconClass}"></i>
                                 </div>
                                 <h5>${pet.getName()}</h5>
                             </div>

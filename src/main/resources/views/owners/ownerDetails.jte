@@ -93,17 +93,17 @@
                                         <div class="col-md-4">
                                             <div class="d-flex align-items-center">
                                                 <div class="pet-icon me-3 ${
-                                                    switch ((pet.getType() != null && pet.getType().getName() != null) ? pet.getType().getName().trim().toLowerCase(Locale.ROOT) : "") {
-                                                        case "cat" -> "cat";
-                                                        case "dog" -> "dog";
-                                                        case "bird" -> "bird";
-                                                        case "hamster" -> "hamster";
-                                                        case "snake" -> "snake";
-                                                        case "lizard" -> "lizard";
-                                                        default -> "dog";
-                                                    }
+                                                    ((pet.getType() != null && pet.getType().getName() != null) ? pet.getType().getName().trim().toLowerCase(Locale.ROOT) : "dog")
                                                 }">
-                                                    <i class="fas fa-paw"></i>
+                                                    <i class="fas ${
+                                                        switch (((pet.getType() != null && pet.getType().getName() != null) ? pet.getType().getName().trim().toLowerCase(Locale.ROOT) : "")) {
+                                                            case "cat" -> "fa-cat";
+                                                            case "bird" -> "fa-dove";
+                                                            case "hamster" -> "fa-hippo";
+                                                            case "snake" -> "fa-worm";
+                                                            default -> "fa-dog";
+                                                        }
+                                                    }"></i>
                                                 </div>
                                                 <div>
                                                     <h6 class="mb-0">${pet.getName()}</h6>
