@@ -20,7 +20,12 @@ build/
 
 # Gradle
 .gradle/
-gradle/
+!gradle/
+gradle/*
+!gradle/libs.versions.toml
+!gradle/wrapper/
+!gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
 
 # OS files
 .DS_Store
