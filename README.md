@@ -213,6 +213,9 @@ export MICRONAUT_ENVIRONMENTS=oracle   # for Oracle
 export MICRONAUT_ENVIRONMENTS=mysql    # for MySQL
 export MICRONAUT_ENVIRONMENTS=postgres # for PostgreSQL
 ./mvnw mn:run
+
+# Gradle alternative
+./gradlew run
 ```
 
 ---
@@ -276,6 +279,9 @@ docker-compose --profile postgres up -d postgres
 
 # Wait for database to be ready (longer for Oracle, 10s for MySQL/PostgreSQL)
 export MICRONAUT_ENVIRONMENTS=oracle  # or mysql, postgres
+./gradlew run
+
+# Maven alternative
 ./mvnw mn:run
 ```
 
@@ -297,6 +303,9 @@ lsof -i :8080
 
 # Kill it or use a different port
 export MICRONAUT_SERVER_PORT=8081
+./gradlew run
+
+# Maven alternative
 ./mvnw mn:run
 ```
 
