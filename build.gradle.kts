@@ -28,7 +28,6 @@ dependencies {
     implementation(libs.micronaut.http.server.netty)
     implementation(libs.micronaut.serde.jackson)
     implementation(libs.micronaut.views.thymeleaf)
-    // The app uses Micronaut Data JDBC (not Hibernate/JPA).
     implementation(libs.micronaut.data.jdbc)
     implementation(libs.micronaut.jdbc.hikari)
     implementation(libs.micronaut.validation)
